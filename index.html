@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>anvil — a compiler in a browser tab</title>
+    <meta
+      name="description"
+      content="Write HTML, CSS, JavaScript, JSON, Python, C, C++ and Java in one buffer. It works out what you wrote, renders markup in a new tab, and compiles the rest."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23f7f3ec'/%3E%3Cpath d='M8 21h16l-2.5-9h-11z' fill='%232f5d8a'/%3E%3Crect x='6' y='21' width='20' height='3' rx='1.5' fill='%2323201b'/%3E%3C/svg%3E"
+    />
+  </head>
+  <body>
+    <div class="splash" id="splash">
+      <div class="splash-inner">
+        <svg class="splash-hat" viewBox="0 0 128 80" role="img" aria-label="anvil">
+          <path class="hat-brim" d="M4 56C4 48 31 42 64 42s60 6 60 14-27 14-60 14S4 64 4 56Z" />
+          <path class="hat-crown" d="M31 52V27c0-9.4 14.8-17 33-17s33 7.6 33 17v25Z" />
+          <path class="hat-band" d="M31 41h66v11H31Z" />
+        </svg>
+        <div class="splash-name">anvil</div>
+        <div class="splash-tag">a compiler in a tab</div>
+      </div>
+    </div>
+
+    <div class="app">
+      <header class="bar">
+        <div class="brand">anvil</div>
+        <div class="spacer"></div>
+        <div class="menu-anchor">
+          <button class="btn btn-primary" id="run" aria-haspopup="menu" aria-expanded="false">
+            <span id="runLabel">Run</span><kbd>Ctrl&#8203;+&#8203;Enter</kbd>
+          </button>
+          <div class="menu" id="runMenu" role="menu" hidden>
+            <button class="menu-item" data-action="console" role="menuitem">
+              <span class="menu-label">Run in console</span>
+              <span class="menu-hint">in the panel below, this tab stays put</span>
+            </button>
+            <button class="menu-item" data-action="tab" role="menuitem">
+              <span class="menu-label">Run in new tab</span>
+              <span class="menu-hint">a terminal window of its own</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <div class="subbar">
+        <span class="chip" id="engineChip">—</span>
+        <span class="chip ghost" id="fileChip">—</span>
+        <div class="spacer"></div>
+        <span class="chip ghost" id="saveChip">saved</span>
+      </div>
+
+      <main class="panes" id="panes">
+        <section class="pane editor-pane">
+          <div class="pane-head">
+            <span class="pane-title" id="fileName">—</span>
+            <div class="spacer"></div>
+            <button class="btn btn-sm" id="fmt" hidden>Format</button>
+            <button class="btn btn-sm" id="reset">Reset</button>
+          </div>
+          <div class="editor" id="editor"></div>
+        </section>
+
+        <div
+          class="splitter"
+          id="splitter"
+          role="separator"
+          aria-orientation="horizontal"
+          aria-label="Resize editor"
+          tabindex="0"
+          hidden
+        ></div>
+
+        <section class="pane console-pane" id="outputPane" hidden>
+          <div class="pane-head">
+            <div class="tabs" id="tabs">
+              <button class="tab is-active" data-tab="console">Console</button>
+              <button class="tab" data-tab="preview">Preview</button>
+              <button class="tab" data-tab="data">Data</button>
+            </div>
+            <div class="spacer"></div>
+            <span class="status" id="status"></span>
+            <button class="btn btn-sm" id="copy">Copy</button>
+            <button class="btn btn-sm" id="clear">Clear</button>
+          </div>
+          <div class="tabbody">
+            <div class="tabpane is-active" data-pane="console">
+              <div class="scrollback" id="scrollback" tabindex="0"></div>
+              <form class="stdin" id="stdinForm" autocomplete="off">
+                <span class="stdin-caret" id="stdinCaret">&#9656;</span>
+                <input
+                  class="stdin-input"
+                  id="stdin"
+                  placeholder="stdin — sent along with the run"
+                  spellcheck="false"
+                />
+                <button class="btn btn-sm" type="submit">Send</button>
+              </form>
+            </div>
+            <div class="tabpane" data-pane="preview">
+              <div class="preview-bar">
+                <span class="chip ghost" id="previewNote">live</span>
+                <div class="spacer"></div>
+                <button class="btn btn-sm" id="reload">Reload</button>
+              </div>
+              <iframe
+                id="previewFrame"
+                title="Preview"
+                sandbox="allow-scripts allow-modals allow-forms allow-popups allow-downloads"
+              ></iframe>
+            </div>
+            <div class="tabpane" data-pane="data">
+              <div class="data" id="dataBody"></div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

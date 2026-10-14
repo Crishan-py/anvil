@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>anvil — terminal</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23f7f3ec'/%3E%3Cpath d='M8 21h16l-2.5-9h-11z' fill='%232f5d8a'/%3E%3Crect x='6' y='21' width='20' height='3' rx='1.5' fill='%2323201b'/%3E%3C/svg%3E"
+    />
+  </head>
+  <body>
+    <div class="app">
+
+      <header class="bar">
+        <div class="brand">anvil</div>
+        <span class="chip" id="tLanguage">—</span>
+        <span class="chip ghost" id="tEngine">—</span>
+        <div class="spacer"></div>
+        <button class="btn btn-sm" id="tSource" aria-expanded="false">Source</button>
+        <button class="btn btn-sm" id="tRerun">Run again</button>
+      </header>
+
+      <pre class="source-pane" id="tSourcePane" hidden></pre>
+
+      <main class="term-main">
+        <div class="scrollback" id="scrollback" tabindex="0"></div>
+        <form class="stdin" id="stdinForm" autocomplete="off">
+          <span class="stdin-caret">&#9656;</span>
+          <input class="stdin-input" id="stdin" spellcheck="false" placeholder="stdin" />
+          <button class="btn btn-sm" type="submit">Send</button>
+        </form>
+      </main>
+    </div>
+    <script type="module" src="/src/terminalTab.ts"></script>
+  </body>
+</html>
